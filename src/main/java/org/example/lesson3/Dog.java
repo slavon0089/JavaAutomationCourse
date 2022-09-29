@@ -12,4 +12,11 @@ public class Dog extends HomeAnimals{
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public static class NameComparator {
+        public boolean compare(Dog dog1, Dog dog2){
+            return dog1.getName().equals(dog2.getName());
+        }
+    }
+
 }
