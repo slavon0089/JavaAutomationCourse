@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-abstract public class Animals {
+import java.io.Serializable;
+
+abstract public class Animals implements Serializable {
     String placeOfLive;
     String wool;
 

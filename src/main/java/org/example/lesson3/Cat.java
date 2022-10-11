@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-public class Cat extends HomeAnimals implements Activities{
+import java.io.Serializable;
+
+public class Cat extends HomeAnimals implements Activities, Serializable {
     Cat(int age, String name) {
         super(age, name);
     }
@@ -21,7 +23,7 @@ public class Cat extends HomeAnimals implements Activities{
         System.out.println("Can climb on the tree so fast");
     }
 
-    public class Pedigree {
+    public class Pedigree implements Serializable{
         private String parentName;
         private String medals;
 

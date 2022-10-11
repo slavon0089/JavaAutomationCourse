@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-public class HomeAnimals extends Animals {
+import java.io.Serializable;
+
+public class HomeAnimals extends Animals implements Serializable {
     boolean canEatYou = false;
     int age;
     String name;

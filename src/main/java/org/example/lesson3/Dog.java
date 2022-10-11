@@ -1,8 +1,11 @@
 package org.example.lesson3;
 
-public class Dog extends HomeAnimals{
+import java.io.Serializable;
+
+public class Dog extends HomeAnimals implements Serializable {
     public Dog(int age, String name) {
-        super(age, name);
+      super(age, name);
+
     }
 
     @Override

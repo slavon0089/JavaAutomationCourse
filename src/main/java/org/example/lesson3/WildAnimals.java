@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-public class WildAnimals extends Animals{
+import java.io.Serializable;
+
+public class WildAnimals extends Animals implements Serializable {
 
     String size;
     int weight;
