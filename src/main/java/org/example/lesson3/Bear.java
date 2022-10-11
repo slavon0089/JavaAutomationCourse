@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-public class Bear extends WildAnimals implements Activities{
+import java.io.Serializable;
+
+public class Bear extends WildAnimals implements Activities, Serializable {
 
     public Bear (String size,int weight, String name){
         super(size,weight, name);

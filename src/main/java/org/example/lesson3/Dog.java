@@ -1,8 +1,11 @@
 package org.example.lesson3;
 
-public class Dog extends HomeAnimals{
+import java.io.Serializable;
+
+public class Dog extends HomeAnimals implements Serializable {
     public Dog(int age, String name) {
-        super(age, name);
+      super(age, name);
+
     }
 
     @Override
@@ -12,4 +15,11 @@ public class Dog extends HomeAnimals{
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public static class NameComparator {
+        public boolean compare(Dog dog1, Dog dog2){
+            return dog1.getName().equals(dog2.getName());
+        }
+    }
+
 }

@@ -1,10 +1,15 @@
 package org.example.lesson3;
 
-public class HomeAnimals extends Animals {
+import java.io.Serializable;
+
+public class HomeAnimals extends Animals implements Serializable {
     boolean canEatYou = false;
     int age;
-
     String name;
+
+    public HomeAnimals() {
+
+    }
 
     public static void  sweetDreams(){
         System.out.println("Those animals likes to live at home");
@@ -17,8 +22,7 @@ public class HomeAnimals extends Animals {
 
     public HomeAnimals(int age, String name) {
         this.age = age;
-        this.name = name;
-    }
+        this.name = name; }
 
     public int getAge() {
         return age;

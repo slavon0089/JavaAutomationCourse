@@ -1,6 +1,8 @@
 package org.example.lesson3;
 
-public class Fox extends WildAnimals {
+import java.io.Serializable;
+
+public class Fox extends WildAnimals implements Serializable {
 
     public Fox (String size,int weight, String name){
         super(size,weight, name);
