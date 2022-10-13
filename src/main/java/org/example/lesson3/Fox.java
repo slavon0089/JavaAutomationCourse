@@ -14,7 +14,7 @@ public class Fox extends WildAnimals implements Serializable {
                 "size='" + size + '\'' +
                 ", weight=" + weight +
                 ", name='" + name + '\'' +
-                ", this animal can beat you"+
+                ", this animal can bite you"+
                 '}';
     }
 }
