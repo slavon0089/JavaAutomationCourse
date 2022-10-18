@@ -1,6 +1,7 @@
 package org.example.lesson3;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class HomeAnimals extends Animals implements Serializable {
     boolean canEatYou = false;
@@ -9,6 +10,19 @@ public class HomeAnimals extends Animals implements Serializable {
 
     public HomeAnimals() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HomeAnimals that = (HomeAnimals) o;
+        return canEatYou == that.canEatYou && age == that.age && name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(canEatYou, age, name);
     }
 
     public static void  sweetDreams(){
