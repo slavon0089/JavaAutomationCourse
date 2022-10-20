@@ -35,7 +35,7 @@ public class Menu {
         }
         return selection;
     }
-    public static void menuRun() throws MenuException {
+    public static void menuRun() {
         int choice = -1;
         while (choice != 0) {
             menu();
