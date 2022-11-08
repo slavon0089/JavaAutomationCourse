@@ -1,113 +1,99 @@
 //////////////////////////
 //CREATE TABLES//
 /////////////////////////
-CREATE TABLE STUDENT(
-	ID_STUDENT numeric(18, 0) NOT NULL,
-	STNAME varchar(50) NULL,
-	BIRTHDAY date NULL,
-	AVERAGEMARK numeric(18, 0) NULL,
-	ID_GROUP numeric(18, 0) NULL,
-	BONUS numeric(18, 0) NULL,
- CONSTRAINT PK_STUDENT PRIMARY KEY CLUSTERED
-(
-	ID_STUDENT ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-CREATE TABLE UGROUP(
-	ID_GROUP numeric(18, 0) NOT NULL,
-	GNAME varchar(50) NULL,
-	ID_UNIVERSITY numeric(18, 0) NULL,
- CONSTRAINT PK_UGROUP PRIMARY KEY CLUSTERED
-(
-	ID_GROUP ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-CREATE TABLE UNIVERSITY(
-	ID_UNIVERSITY numeric(18, 0) NOT NULL,
-	UNAME varchar(255) NULL,
-	ADDRESS varchar(50) NULL,
- CONSTRAINT PK_UNIVERSITY PRIMARY KEY CLUSTERED
-(
-	ID_UNIVERSITY ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
 
-ALTER TABLE STUDENT  WITH CHECK ADD  CONSTRAINT FK_STUDENT_UGROUP FOREIGN KEY(ID_GROUP)
-REFERENCES UGROUP (ID_GROUP)
-ALTER TABLE STUDENT CHECK CONSTRAINT FK_STUDENT_UGROUP
-ALTER TABLE UGROUP  WITH CHECK ADD  CONSTRAINT FK_UGROUP_UNIVERSITY FOREIGN KEY(ID_UNIVERSITY)
-REFERENCES UNIVERSITY (ID_UNIVERSITY)
-ALTER TABLE UGROUP CHECK CONSTRAINT FK_UGROUP_UNIVERSITY
+   CREATE TABLE university (
+      university_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      uni_name VARCHAR(100) NOT NULL,
+	  address VARCHAR(100) NOT NULL
+
+   );
+
+   CREATE TABLE groups (
+      group_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      group_name VARCHAR(100) NOT NULL,
+	  university_id INT NOT NULL DEFAULT 1,
+	   CONSTRAINT fk_uni_group FOREIGN KEY (university_id) REFERENCES university (university_id)
+   );
+
+   CREATE TABLE students (
+      student_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      student_name VARCHAR(100) NOT NULL,
+	  birthday  date,
+      averagemark NUMERIC(18,2) NULL,
+      group_id INT NOT NULL DEFAULT 1,
+	  bonus NUMERIC(18,2) NULL,
+    CONSTRAINT fk_group_students FOREIGN KEY (group_id) REFERENCES groups (group_id)
+);
+
 //////////////////////////
 //INSERT//
 /////////////////////////
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(10 AS Numeric(18, 0)), N'Belarusian State University', N'K. Marksa, 31')
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(20 AS Numeric(18, 0)), N'Belarusian State University of Transport', N'Kirova, 34')
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(30 AS Numeric(18, 0)), N'Belarusian State University of Informatics and Radioelectronics', N'P. Brovki, 6')
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(40 AS Numeric(18, 0)), N'Belarusian National Technological University', N'Nezavisimosti, 65')
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(50 AS Numeric(18, 0)), N'Vitebsk State Technological University', N'Moskovskiy Avenue, 72')
-INSERT UNIVERSITY (ID_UNIVERSITY, UNAME, ADDRESS) VALUES (CAST(60 AS Numeric(18, 0)), N'Gomel State University after F Skorina', N'Kirova, 119')
+INSERT INTO university (uni_name, address) VALUES ( N'Belarusian State University', N'K. Marksa, 31');
+INSERT INTO university (uni_name, address) VALUES ( N'Belarusian State University of Transport', N'Kirova, 34');
+INSERT INTO university (uni_name, address) VALUES ( N'Belarusian State University of Informatics and Radioelectronics', N'P. Brovki, 6');
+INSERT INTO university (uni_name, address) VALUES ( N'Belarusian National Technological University', N'Nezavisimosti, 65');
+INSERT INTO university (uni_name, address) VALUES ( N'Vitebsk State Technological University', N'Moskovskiy Avenue, 72');
+INSERT INTO university (uni_name, address) VALUES ( N'Gomel State University after F Skorina', N'Kirova, 119');
 
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(101 AS Numeric(18, 0)), N'BSU Group', CAST(10 AS Numeric(18, 0)))
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(102 AS Numeric(18, 0)), N'BSUT GomelUni Grup', CAST(20 AS Numeric(18, 0)))
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(103 AS Numeric(18, 0)), N'BSUIR Group', CAST(30 AS Numeric(18, 0)))
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(104 AS Numeric(18, 0)), N'BNTU Group', CAST(40 AS Numeric(18, 0)))
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(105 AS Numeric(18, 0)), N'VSTU VitUni1 Group', CAST(50 AS Numeric(18, 0)))
-INSERT UGROUP (ID_GROUP, GNAME, ID_UNIVERSITY) VALUES (CAST(106 AS Numeric(18, 0)), N'SU GomelUni1 Group', CAST(60 AS Numeric(18, 0)))
+INSERT INTO groups ( group_name, university_id) VALUES ('BSU Group', 1);
+INSERT INTO groups ( group_name, university_id) VALUES ('BSUT GomelUni Grup', 2);
+INSERT INTO groups ( group_name, university_id) VALUES ('BSUIR Group', 3);
+INSERT INTO groups ( group_name, university_id) VALUES ('BNTU Group', 4);
+INSERT INTO groups ( group_name, university_id) VALUES ('VSTU VitUni1', 5);
+INSERT INTO groups ( group_name, university_id) VALUES ('SU GomelUni1', 5);
 
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(101 AS Numeric(18, 0)), N'BLAZEJ', CAST(N'1990-09-10' AS Date), CAST(8 AS Numeric(18, 0)), CAST(102 AS Numeric(18, 0)), CAST(5 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(102 AS Numeric(18, 0)), N'JUS%TIN', CAST(N'1988-04-21' AS Date), CAST(8 AS Numeric(18, 0)),CAST(102 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(103 AS Numeric(18, 0)), N'DOMINIC', CAST(N'1987-10-11' AS Date), CAST(8 AS Numeric(18, 0)), CAST(104 AS Numeric(18, 0)),  CAST(1 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(104 AS Numeric(18, 0)), N'OTTO', CAST(N'1990-07-12' AS Date), CAST(6 AS Numeric(18, 0)), CAST(103 AS Numeric(18, 0)),  CAST(5 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(105 AS Numeric(18, 0)), N'JAMES', CAST(N'1983-04-19' AS Date), CAST(6 AS Numeric(18, 0)), CAST(101 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(106 AS Numeric(18, 0)), N'NORMAN', CAST(N'1983-11-22' AS Date), CAST(7 AS Numeric(18, 0)),  CAST(101 AS Numeric(18, 0)),  CAST(1 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(107 AS Numeric(18, 0)), N'ALEX', CAST(N'1984-04-19' AS Date), CAST(7 AS Numeric(18, 0)), CAST(101 AS Numeric(18, 0)),  CAST(1 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(108 AS Numeric(18, 0)), N'BILL', CAST(N'1985-01-24' AS Date), CAST(6 AS Numeric(18, 0)),  CAST(103 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(109 AS Numeric(18, 0)), N'MARTIN', CAST(N'1985-06-11' AS Date), CAST(7 AS Numeric(18, 0)), CAST(102 AS Numeric(18, 0)),  CAST(100 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(110 AS Numeric(18, 0)), N'DAVID', CAST(N'1985-02-25' AS Date), CAST(8 AS Numeric(18, 0)),  CAST(105 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(111 AS Numeric(18, 0)), N'ULMA', CAST(N'1985-12-19' AS Date), CAST(10 AS Numeric(18, 0)),  CAST(101 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(112 AS Numeric(18, 0)), N'DEON', CAST(N'1986-04-12' AS Date), CAST(7 AS Numeric(18, 0)), CAST(101 AS Numeric(18, 0)),  CAST(3 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(113 AS Numeric(18, 0)), N'LEON', CAST(N'1983-05-01' AS Date), CAST(9 AS Numeric(18, 0)),  CAST(104 AS Numeric(18, 0)),  CAST(2 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(114 AS Numeric(18, 0)), N'JAN', CAST(N'1990-01-20' AS Date), CAST(7 AS Numeric(18, 0)),  CAST(106 AS Numeric(18, 0)),  CAST(3 AS Numeric(18, 0)))
-INSERT STUDENT (ID_STUDENT, STNAME, BIRTHDAY, AVERAGEMARK, ID_GROUP, BONUS) VALUES (CAST(115 AS Numeric(18, 0)), N'EMI%L', CAST(N'1990-03-19' AS Date), CAST(6 AS Numeric(18, 0)),  CAST(106 AS Numeric(18, 0)), CAST(500 AS Numeric(18, 0)))
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('BLAZEJ', CAST(N'1990-09-10' AS Date), 5, 5, 5);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('JUS%TIN', CAST(N'1988-04-21' AS Date), 4,1, 500);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('DOMINIC', CAST(N'1987-10-11' AS Date), 4.3, 2,100);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('OTTO', CAST(N'1990-07-12' AS Date), 4, 3,  50);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('JAMES', CAST(N'1983-04-19' AS Date), 5, 4, 500);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('NORMAN', CAST(N'1983-11-22' AS Date), 5,  5,  100);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('ALEX', CAST(N'1984-04-19' AS Date), 4, 6,  100);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('BILL', CAST(N'1985-01-24' AS Date), 4.3,  4, 500);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('MARTIN', CAST(N'1985-06-11' AS Date), 4, 5,  100);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('DAVID', CAST(N'1985-02-25' AS Date), 4,  2, 500);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('ULMA', CAST(N'1985-12-19' AS Date), 5,  1, 500);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('DEON', CAST(N'1986-04-12' AS Date), 5, 2,  300);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('LEON', CAST(N'1983-05-01' AS Date), 4,  1,  150);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('JAN', CAST(N'1990-01-20' AS Date), 5,  3, 300);
+INSERT INTO students ( student_name, birthday, averagemark, group_id, bonus) VALUES ('EMI%L', CAST(N'1990-03-19' AS Date), 4,  1, 150);
 //////////////////////////
 //UPDATE//
 /////////////////////////
-UPDATE STUDENT
-SET STNAME = 'Angel'
-WHERE ID_STUDENT = 101;
+UPDATE university SET uni_name = 'New university' WHERE university_id = 2;
 //////////////////////////
 //DELETE ONE FIELD//
 /////////////////////////
-DELETE FROM STUDENT WHERE ID_STUDENT = 102;
+DELETE FROM students WHERE student_id = 10;
 //////////////////////////
-//DELETE ALL FIELDS (Not cascade, because a lot dependencies//
+DELETE ALL FIELDS (Not cascade, because a lot dependencies)
 /////////////////////////
-DELETE FROM STUDENT
+DELETE FROM students;
 //////////////////////////
 //GET RECORDS//
 /////////////////////////
-SELECT * FROM STUDENT
-WHERE ID_STUDENT BETWEEN 101 AND 103;
+SELECT * FROM STUDENTS
+WHERE averagemark BETWEEN 4.1 AND 5;
 
 SELECT * FROM UNIVERSITY
-WHERE UNAME like '%elarusian%'
+WHERE uni_name like '%elarusian%';
 
-SELECT * FROM UGROUP
-WHERE ID_GROUP in ('101','103','105')
+SELECT * FROM groups
+WHERE group_id in ('1','3','4');
 //////////////////////////
 //JOIN//
 /////////////////////////
-SELECT * FROM STUDENT
-JOIN UGROUP ON STUDENT.ID_GROUP = UGROUP.ID_GROUP
-JOIN UNIVERSITY ON UGROUP.ID_UNIVERSITY = UNIVERSITY.ID_UNIVERSITY
-ORDER BY STUDENT.STNAME
+SELECT * FROM students
+JOIN groups ON students.group_id = groups.group_id
+JOIN university ON groups.university_id = UNIVERSITY.university_id
+ORDER BY students.student_name;
 //////////////////////////
 //TOTAL RECORDS IN DB//
 /////////////////////////
-SELECT count(*) + (SELECT count(*) FROM UNIVERSITY) + (SELECT count(*) FROM UGROUP)  AS 'total records' FROM STUDENT
+SELECT (count(*) + (SELECT count(*) FROM university) + (SELECT count(*) FROM groups)) AS "total"   FROM students
 //////////////////////////
 //AGREGATED FUNCTION//
 /////////////////////////
-SELECT *  FROM STUDENT
-WHERE AVERAGEMARK = (SELECT MAX (AVERAGEMARK) FROM STUDENT)
+SELECT *  FROM students
+WHERE averagemark = (SELECT MAX (averagemark) FROM students)

@@ -1,0 +1,15 @@
+
+W
+java:S1226"AIntroduce a new variable instead of reusing the parameter "nums".(îŞ—Ê
+`
+java:S1226"CIntroduce a new variable instead of reusing the parameter "target".(Æ‚Î’8ŒÔö‘²0
+V
+java:S1659
+"@Declare "sum" and all following declarations on a separate line.(÷ñÆ†
+N	java:S106"9Replace this use of System.out or System.err by a logger.(ûåóˆ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(äã–
+W
+java:S1854":Remove this useless assignment to local variable "target".(Æ‚Î’8 Ôö‘²0
+N
+java:S1854"8Remove this useless assignment to local variable "nums".(îŞ—Ê
+N	java:S106"9Replace this use of System.out or System.err by a logger.(ŞñÂÏ
